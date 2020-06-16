@@ -2,7 +2,6 @@
 
 This is a system write in Python 3 to handle custom *Cards Against Humanity* decks. The [CAH_Database.py](https://github.com/imsamuka/CAH_Handler/blob/master/CAH_PDF-Generator.py) reads a `.txt` file formatted as following:
 
-![Format Example ](https://i.imgur.com/TiMWUW1)
 [Format Example](https://i.imgur.com/TiMWUW1.png)
 
 It generates 2 lists, one containing all the white cards and the other, the black cards.
