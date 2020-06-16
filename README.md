@@ -13,8 +13,8 @@ For the time being we can use these lists for 2 purposes:
 
 ![Cards Look](https://i.imgur.com/4CM1OF8.png)
 ![Personalized](https://i.imgur.com/8O7pULT.png)
-![Front Pages](https://i.imgur.com/9hCAGC3.png)
-![Back Pages](https://i.imgur.com/mn7DHDA.png)
+![Front Pages](https://i.imgur.com/9nxH5ta.png)
+![Back Pages](https://i.imgur.com/Er0xCWt.png)
 
 **In the future**, i will rewrite a code that generates the `.png` files to use in *Table Top Simulator* ~~which for some reason, i wrote in Java~~. These cards will look like that:
 
