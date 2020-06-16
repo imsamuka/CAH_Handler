@@ -4,7 +4,7 @@ This is a system write in Python 3 to handle custom *Cards Against Humanity* dec
 
 ![Format Example](https://i.imgur.com/TiMWUW1.png)
 
-It generates 2 lists, one containing all the white cards and the other, the black cards.
+It generates 2 lists, one containing all the white cards and the other, the black cards. On black cards, acummulated "_" will turn into one single "_" and extended when generate the cards.
 
 For the time being we can use these lists for 2 purposes:
 
