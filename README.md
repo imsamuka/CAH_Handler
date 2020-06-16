@@ -15,4 +15,6 @@ PDF IMAGE
 
 **In the future**, i will rewrite a code that generates the `.png` files to use in *Table Top Simulator* ~~which for some reason, i wrote in Java~~. These cards will look like that:
 
+PNG IMAGE
+
 The [res](https://github.com/imsamuka/CAH_Handler/tree/master/res "res") folder contain the [DEFAULTCARDS_PT-BR.txt](https://github.com/imsamuka/CAH_Handler/blob/master/res/DEFAULTCARDS_PT-BR.txt "DEFAULTCARDS_PT-BR.txt") which are the standard game cards in Brazilian Portuguese.
