@@ -33,7 +33,7 @@ binfs = ["\n", CAH_Database.COMMENT_CHAR + binfs + "\n"]
 # ----------------------------------------------
 UseDialogBoxes = True
 
-if UseDialogBoxes and INPUT_FILE == None:
+if UseDialogBoxes and not INPUT_FILE:
     root = tkinter.Tk()
     root.withdraw()
     desktop = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
@@ -41,9 +41,9 @@ if UseDialogBoxes and INPUT_FILE == None:
 
 # -------------------
 
-assert INPUT_FILE != None , 'There is no input file! Insert one by adding a "--input_file" argument and then your file'
+assert not not INPUT_FILE , 'There is no input file! Insert one by adding a "--input_file" argument and then your file'
 
-if not len(OUTPUT_FILE) >= 1:
+if not OUTPUT_FILE:
     if "/" in INPUT_FILE:
         OUTPUT_FILE = INPUT_FILE.split("/")
         OUTPUT_FILE[-1] = fmt+OUTPUT_FILE[-1]
@@ -57,7 +57,7 @@ wcList, bcList = CAH_Database.readTxtFile(INPUT_FILE)
 tempList = []
 
 # --------- Creating a formated new File --------------
-newFile = open(OUTPUT_FILE,"w")
+newFile = open(OUTPUT_FILE, "w", encoding="utf-8")
 
 # -------- White Cards
 
