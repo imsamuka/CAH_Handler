@@ -7,9 +7,9 @@ import os
 
 # ArgumentParser ------------------
 parser = argparse.ArgumentParser(description='Rewritte a .txt file of CAH_Database to be a little prettier :D')
-parser.add_argument('--input_file', type=str,  help='the .txt file you want rewritten')
-parser.add_argument('--output_file', type=str, default="", help="the output file. (optional. if not included, it'll just modify the input file name)")
-parser.add_argument('--language', type=str, default='', help="language of information. Default is ENG but currently can accept 'pt-br' too.")
+parser.add_argument('--input_file',  type=str, help='the .txt file you want rewritten')
+parser.add_argument('--output_file', type=str, default='', help='the output file. (optional)')
+parser.add_argument('--language',    type=str, default='', help='language of information. Default is ENG but currently can accept 'pt-br' too.')
 args = parser.parse_args()
 
 INPUT_FILE = args.input_file
@@ -19,27 +19,15 @@ LANG = args.language
 
 if LANG.lower() == 'pt-br' or LANG.lower() == 'br':
     fmt = "Formatado - "
-    winfs = """Cada linha a partir daqui vai ser considerado uma CARTA BRANCA"""
-    binfs = """Cada linha a partir daqui vai ser considerado uma CARTA PRETA"""
+    winfs = "Cada linha a partir daqui vai ser considerado uma CARTA BRANCA"
+    binfs = "Cada linha a partir daqui vai ser considerado uma CARTA PRETA"
 else:
     fmt = "Formatted - "
-    winfs = """Each line from here will be considered a WHITE CARD"""
-    binfs = """Each line from here will be considered a BLACK CARD"""
+    winfs = "Each line from here will be considered a WHITE CARD"
+    binfs = "Each line from here will be considered a BLACK CARD"
 
-
-winfs = ("\n"+winfs).split("\n")
-for i, k in enumerate(winfs):
-    if k:
-        k = CAH_Database.COMMENT_CHAR+k
-    k += "\n"
-    winfs[i] = k
-
-binfs = ("\n"+binfs).split("\n")
-for i, k in enumerate(binfs):
-    if k:
-        k = CAH_Database.COMMENT_CHAR+k
-    k += "\n"
-    binfs[i] = k
+winfs = ["\n", CAH_Database.COMMENT_CHAR + winfs + "\n"]
+binfs = ["\n", CAH_Database.COMMENT_CHAR + binfs + "\n"]
 
 
 # ----------------------------------------------
