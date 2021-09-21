@@ -6,19 +6,19 @@ COMMENT_CHAR = "#"
 
 # Functions
 
-def unifyOnList(strings, char):
+def unifyOnList(strings : list[str], char : str) -> None:
     dchar = char+char
     for i in range(len(strings)):
         while dchar in strings[i]:
             strings[i] = strings[i].replace(dchar,char)
 
-def repeatOnList(strings, char, n):
+def repeatOnList(strings : list[str], char : str, n : int) -> None:
     nchar = char*n
     for i in range(len(strings)):
         if char in strings[i]:
             strings[i] = strings[i].replace(char,nchar)
 
-def readTxtFile(filepath):
+def readTxtFile(filepath : str) -> tuple[list[str], list[str]]:
     IGNORE_CHARS = COMMENT_CHAR + WC_MARK[0] + BC_MARK[0]
 
     wcList = [] # WhiteCards
@@ -46,4 +46,4 @@ def readTxtFile(filepath):
     # Unifying "_" on Black Cards: "____" --> "_"
     unifyOnList(bcList, BC_BLANK_CHAR)
 
-    return wcList, bcList
+    return (wcList, bcList)
