@@ -14,10 +14,10 @@ args = parser.parse_args()
 
 INPUT_FILE = args.input_file
 OUTPUT_FILE = args.output_file
-LANG = args.language
+LANG = args.language.lower()
 # ----------------------------------
 
-if LANG.lower() == 'pt-br' or LANG.lower() == 'br':
+if LANG == 'pt-br' or LANG == 'br':
     fmt = "Formatado - "
     winfs = "Cada linha a partir daqui vai ser considerado uma CARTA BRANCA"
     binfs = "Cada linha a partir daqui vai ser considerado uma CARTA PRETA"
