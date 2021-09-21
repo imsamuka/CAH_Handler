@@ -1,8 +1,8 @@
-# Default Characters
-wcIdentifier = "[WHITECARDS]"
-bcIdentifier = "[BLACKCARDS]"
-null_line = "#"
-blackCardBlankSpace = "_"
+# Constants
+WC_MARK = "[WHITECARDS]"
+BC_MARK = "[BLACKCARDS]"
+BC_BLANK_CHAR = "_"
+COMMENT_CHAR = "#"
 # ----- DataBases -----
 # WhiteCards
 wcList = []
@@ -36,10 +36,10 @@ def readTxtFile(filepath):
             line = file.readline()
             continue
 
-        if wcIdentifier[0] == line[0] or bcIdentifier[0] == line[0]  or null_line == line[0]:
-            if bcIdentifier in line:
+        if WC_MARK[0] == line[0] or BC_MARK[0] == line[0]  or COMMENT_CHAR == line[0]:
+            if BC_MARK in line:
                 readingBlackCards = True
-            elif wcIdentifier in line:
+            elif WC_MARK in line:
                 readingBlackCards = False
             line = file.readline()
             continue
@@ -51,6 +51,6 @@ def readTxtFile(filepath):
         line = file.readline()
 
     # Unifying "_" on Black Cards: "____" --> "_"
-    unifyOnList(bcList,blackCardBlankSpace)
+    unifyOnList(bcList,BC_BLANK_CHAR)
 
     return wcList, bcList

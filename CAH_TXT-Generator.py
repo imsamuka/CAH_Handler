@@ -76,7 +76,7 @@ newFile = open(OUTPUT_FILE,"w")
 tempList = [i+"\n" for i in wcList]
 tempList[-1] = str(tempList[-1])[:-1]
 tempList = winfs + tempList
-tempList.insert(0,CAH_Database.wcIdentifier)
+tempList.insert(0,CAH_Database.WC_MARK)
 newFile.writelines(tempList)
 
 # -------- Black Cards
@@ -84,5 +84,5 @@ newFile.writelines(tempList)
 tempList = [i+"\n" for i in bcList]
 tempList[-1] = str(tempList[-1])[:-1]
 tempList = binfs + tempList
-tempList.insert(0,"\n"*5 + CAH_Database.bcIdentifier)
+tempList.insert(0,"\n"*5 + CAH_Database.BC_IDENTIFIER)
 newFile.writelines(tempList)
