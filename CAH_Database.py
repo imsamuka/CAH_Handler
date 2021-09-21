@@ -3,12 +3,8 @@ WC_MARK = "[WHITECARDS]"
 BC_MARK = "[BLACKCARDS]"
 BC_BLANK_CHAR = "_"
 COMMENT_CHAR = "#"
-# ----- DataBases -----
-# WhiteCards
-wcList = []
-# BlackCards
-bcList = []
-# ---------------------
+
+# Functions
 
 def unifyOnList(strings, char):
     dchar = char+char
@@ -23,7 +19,9 @@ def repeatOnList(strings, char, n):
             strings[i] = strings[i].replace(char,nchar)
 
 def readTxtFile(filepath):
-    global wcList, bcList
+    wcList = [] # WhiteCards
+    bcList = [] # BlackCards
+
     file = open(filepath,"r")
 
     readingBlackCards = False
