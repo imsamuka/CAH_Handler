@@ -21,4 +21,4 @@ For the time being we can use these lists for 2 purposes:
 ![PNG Decks](https://i.imgur.com/dxy8rGC.png)
 
 The [res](https://github.com/imsamuka/CAH_Handler/tree/master/res "res") folder contain the [DEFAULTCARDS_PT-BR.txt](https://github.com/imsamuka/CAH_Handler/blob/master/res/DEFAULTCARDS_PT-BR.txt "DEFAULTCARDS_PT-BR.txt") which are the standard game cards in Brazilian Portuguese. I dont made the archive for the english version yet.
-The folder also contain the [CUSTOMCARDS_PT-BR.txt.txt](https://github.com/imsamuka/CAH_Handler/blob/master/res/CUSTOMCARDS_PT-BR.txt.txt "CUSTOMCARDS_PT-BR.txt.txt") which is my custom cards plus cool default ones.
+The folder also contain the [CUSTOMCARDS_PT-BR.txt](https://github.com/imsamuka/CAH_Handler/blob/master/res/CUSTOMCARDS_PT-BR.txt "CUSTOMCARDS_PT-BR.txt") which is my custom cards plus cool default ones.
