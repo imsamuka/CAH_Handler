@@ -19,37 +19,31 @@ def repeatOnList(strings, char, n):
             strings[i] = strings[i].replace(char,nchar)
 
 def readTxtFile(filepath):
+    IGNORE_CHARS = COMMENT_CHAR + WC_MARK[0] + BC_MARK[0]
+
     wcList = [] # WhiteCards
     bcList = [] # BlackCards
 
     reading_bc = False
 
     file = open(filepath,"r")
-    line = file.readline()
 
-    while line:
+    for line in file:
 
         line = line.strip(" \n")
+        if not line: continue
 
-        if not line:
-            line = file.readline()
+        if line[0] in IGNORE_CHARS:
+            if   BC_MARK in line: reading_bc = True
+            elif WC_MARK in line: reading_bc = False
             continue
 
-        if WC_MARK[0] == line[0] or BC_MARK[0] == line[0]  or COMMENT_CHAR == line[0]:
-            if BC_MARK in line:
-                reading_bc = True
-            elif WC_MARK in line:
-                reading_bc = False
-            line = file.readline()
-            continue
+        if reading_bc: bcList.append(line)
+        else:          wcList.append(line)
 
-        if reading_bc:
-            bcList.append(line)
-        else:
-            wcList.append(line)
-        line = file.readline()
+    file.close()
 
     # Unifying "_" on Black Cards: "____" --> "_"
-    unifyOnList(bcList,BC_BLANK_CHAR)
+    unifyOnList(bcList, BC_BLANK_CHAR)
 
     return wcList, bcList
