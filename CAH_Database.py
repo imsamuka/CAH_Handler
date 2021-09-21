@@ -22,10 +22,11 @@ def readTxtFile(filepath):
     wcList = [] # WhiteCards
     bcList = [] # BlackCards
 
-    file = open(filepath,"r")
+    reading_bc = False
 
-    readingBlackCards = False
+    file = open(filepath,"r")
     line = file.readline()
+
     while line:
 
         line = line.strip(" \n")
@@ -36,13 +37,13 @@ def readTxtFile(filepath):
 
         if WC_MARK[0] == line[0] or BC_MARK[0] == line[0]  or COMMENT_CHAR == line[0]:
             if BC_MARK in line:
-                readingBlackCards = True
+                reading_bc = True
             elif WC_MARK in line:
-                readingBlackCards = False
+                reading_bc = False
             line = file.readline()
             continue
 
-        if readingBlackCards:
+        if reading_bc:
             bcList.append(line)
         else:
             wcList.append(line)
