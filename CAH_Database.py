@@ -22,16 +22,6 @@ def repeatOnList(strings, char, n):
         if char in strings[i]:
             strings[i] = strings[i].replace(char,nchar)
 
-def clearInString(text,chars = [" ", "\n"]):
-    for k in chars:
-        for char in chars:
-            while text.startswith(char):
-                text = text[len(char):]
-            while text.endswith(char):
-                text = text[:-len(char)]
-    return text
-
-
 def readTxtFile(filepath):
     global wcList, bcList
     file = open(filepath,"r")
@@ -40,12 +30,12 @@ def readTxtFile(filepath):
     line = file.readline()
     while line:
 
-        line = clearInString(line)
+        line = line.strip(" \n")
 
         if not line:
             line = file.readline()
             continue
-        
+
         if wcIdentifier[0] == line[0] or bcIdentifier[0] == line[0]  or null_line == line[0]:
             if bcIdentifier in line:
                 readingBlackCards = True
