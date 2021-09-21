@@ -30,14 +30,14 @@ else:
 winfs = ("\n"+winfs).split("\n")
 for i, k in enumerate(winfs):
     if k:
-        k = CAH_Database.null_line+k
+        k = CAH_Database.COMMENT_CHAR+k
     k += "\n"
     winfs[i] = k
 
 binfs = ("\n"+binfs).split("\n")
 for i, k in enumerate(binfs):
     if k:
-        k = CAH_Database.null_line+k
+        k = CAH_Database.COMMENT_CHAR+k
     k += "\n"
     binfs[i] = k
 
@@ -84,5 +84,5 @@ newFile.writelines(tempList)
 tempList = [i+"\n" for i in bcList]
 tempList[-1] = str(tempList[-1])[:-1]
 tempList = binfs + tempList
-tempList.insert(0,"\n"*5 + CAH_Database.BC_IDENTIFIER)
+tempList.insert(0,"\n"*5 + CAH_Database.BC_MARK)
 newFile.writelines(tempList)
