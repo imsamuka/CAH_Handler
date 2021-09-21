@@ -10,24 +10,17 @@ wcList = []
 bcList = []
 # ---------------------
 
-def unifyOnList(List, char):
-    i = 0
-    doubleChar = char+char
-    while i < len(List):
-        while doubleChar in List[i]:
-            List[i] = List[i].replace(doubleChar,char)
-        i += 1
-    return
+def unifyOnList(strings, char):
+    dchar = char+char
+    for i in range(len(strings)):
+        while dchar in strings[i]:
+            strings[i] = strings[i].replace(dchar,char)
 
-def repeatOnList(List, char, n):
-    nTimesChar = char*n
-    i = 0
-    size = len(List)
-    while i < size:
-        if char in List[i]:
-            List[i].replace(char,nTimesChar)
-        i += 1
-    return
+def repeatOnList(strings, char, n):
+    nchar = char*n
+    for i in range(len(strings)):
+        if char in strings[i]:
+            strings[i] = strings[i].replace(char,nchar)
 
 def clearInString(text,chars = [" ", "\n"]):
     for k in chars:
