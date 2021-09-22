@@ -53,12 +53,14 @@ logoForBlack = "res/CAHLogoInverted.png"
 # ----------------------------------------------
 UseDialogBoxes = True
 
-if UseDialogBoxes and INPUT_FILE == None:
+if UseDialogBoxes and not INPUT_FILE:
     INPUT_FILE = dialogSelectInputFile()
 
 # -------------------
 
-assert INPUT_FILE != None , 'There is no input file! Insert one by adding a "--input_file" argument and then your file'
+if not INPUT_FILE:
+    print('There is no input file!\n Insert one by adding a "--input_file" argument and then your file')
+    exit(1)
 
 if not OUTPUT_FILE:
     # Split the input file path by '/'

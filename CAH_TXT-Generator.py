@@ -31,7 +31,9 @@ if UseDialogBoxes and not INPUT_FILE:
 
 # -------------------
 
-assert not not INPUT_FILE , 'There is no input file! Insert one by adding a "--input_file" argument and then your file'
+if not INPUT_FILE:
+    print('There is no input file!\n Insert one by adding a "--input_file" argument and then your file')
+    exit(1)
 
 if not OUTPUT_FILE:
     # Split the input file path by '/'
