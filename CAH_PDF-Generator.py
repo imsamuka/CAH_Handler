@@ -233,14 +233,16 @@ def getBackTb(qtd):
     return data
 
 
-def excessTable(qtd):
-    global ALL_tables
+def excessTable(excess, tables):
+    if excess <= 0: return
 
-    pageShift = rows - ceil(qtd/col)
-    if pageShift:
-        blank = [[''] for i in range(pageShift)]
-        table = Table(blank, cardWidth, cardHeight)
-        ALL_tables.append(table)
+    # (1 + excess//col) -> How many rows the excess occupies
+    gap_size = rows - (1 + excess//col)
+    if gap_size <= 0: return
+
+    fillers = [[''] for i in range(gap_size)]
+    table = Table(fillers, cardWidth, cardHeight)
+    tables.append(table)
 
 
 ###################################################################
@@ -250,12 +252,12 @@ def excessTable(qtd):
 setColors()
 ALL_tables.append(Table(getBackTb(col*rows), cardWidth, cardHeight, style=ts))
 ALL_tables.append(Table(getBackTb(wcExcess), cardWidth, cardHeight, style=ts))
-excessTable(wcExcess)
+excessTable(wcExcess, ALL_tables)
 
 setColors(True)
 ALL_tables.append(Table(getBackTb(col*rows), cardWidth, cardHeight,style=ts))
 ALL_tables.append(Table(getBackTb(bcExcess), cardWidth, cardHeight,style=ts))
-excessTable(bcExcess)
+excessTable(bcExcess, ALL_tables)
 
 
 # ------- Get White Cards Tables -------
@@ -263,7 +265,7 @@ setColors()
 while wcList:
     table = Table(getData(wcList), cardWidth, cardHeight, style=ts)
     ALL_tables.append(table)
-excessTable(wcExcess)
+excessTable(wcExcess, ALL_tables)
 
 # ------- Get Black Cards Tables -------
 setColors(True)
@@ -273,7 +275,7 @@ CAH_Database.repeatOnList(bcList, '_', 3)
 while bcList:
     table = Table(getData(bcList), cardWidth, cardHeight, style=ts)
     ALL_tables.append(table)
-excessTable(bcExcess)
+excessTable(bcExcess, ALL_tables)
 
 # --------------- GENERATE FINAL PDF ---------------
 
