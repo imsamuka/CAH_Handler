@@ -114,10 +114,11 @@ def readTxtFile(filepath : str) -> tuple[list[str], list[str]]:
     try:
         file = open(filepath,"r")
         string = file.read()
-        file.close()
     except IOError:
         print("Error: Couldn't open and read file")
         exit(1)
+    finally:
+        file.close()
 
     return decksFromString(string)
 
@@ -128,11 +129,13 @@ def writeTxtFile(
     infos : tuple[str, str] = ()
     ) -> None:
 
+    string = decksToString(decks, infos)
+
     try:
         file = open(filepath, "w", encoding="utf-8")
-        string = decksToString(decks, infos)
         file.write(string)
-        file.close()
     except IOError:
-        print("Error: Couldn't open and write file to write")
+        print("Error: Couldn't open and write to file")
         exit(1)
+    finally:
+        file.close()
