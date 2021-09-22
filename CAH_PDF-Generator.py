@@ -34,14 +34,17 @@ args = parser.parse_args()
 
 INPUT_FILE  = args.input_file
 OUTPUT_FILE = args.output_file
+
 pagesize    = ( mm*float(args.pagesize[1:-1].split(",")[0]),
                 mm*float(args.pagesize[1:-1].split(",")[1]) )
-cardWidth   = mm*float(args.cardsize[1:-1].split(",")[0])
-cardHeight  = mm*float(args.cardsize[1:-1].split(",")[1])
+cardWidth  = mm*float(args.cardsize[1:-1].split(",")[0])
+cardHeight = mm*float(args.cardsize[1:-1].split(",")[1])
 margin      = mm*args.margin
-blackValue  = clamp(args.blackValue, 0, 255)
+
+blackValue     = clamp(args.blackValue, 0, 255)
 gridBlackValue = clamp(args.gridBlackValue, 0, 255)
-fontSize = args.normalfontsize
+
+fontsize     = args.normalfontsize
 backfontsize = args.backfontsize
 
 logoForWhite = "res/CAHLogo.png"
@@ -79,16 +82,15 @@ wcList, bcList = CAH_Database.readTxtFile(INPUT_FILE)
 if cardWidth > cardHeight and pagesize[1] > pagesize[0]:
     pagesize = (pagesize[1], pagesize[0])
 
-cellMargin = cardWidth*(3.5/50)
-cellTop    = cellMargin*3/4
+cardXMargin = cardWidth*(3.5/50)
+cardYMargin = cardXMargin*3/4
 
 imgWidth  = cardWidth*3/4
 imgHeight = imgWidth*(158/876)
+imgTop = cardHeight - cardYMargin - imgHeight - 1.5*mm
 
-cellAboveImageHeight = cardHeight - cellTop - imgHeight - 1.5*mm
-
-maxWidth  = cardWidth  - (2*cellMargin)
-maxHeight = cardHeight - (2*cellMargin*3/4) - imgHeight
+textMaxWidth  = cardWidth  - (2*cardXMargin)
+textMaxHeight = cardHeight - (2*cardYMargin) - imgHeight
 
 col  = int((pagesize[0] - 2*margin) // cardWidth)
 rows = int((pagesize[1] - 2*margin) // cardHeight)
@@ -106,16 +108,16 @@ img = Image(logoForWhite, imgWidth, imgHeight)
 ps = ParagraphStyle(
     'title',
     fontName = 'Helvetica',
-    fontSize = fontSize,
-    leading = fontSize+2,
+    fontSize = fontsize,
+    leading = fontsize+2,
     splitLongWords = False
 )
 
 ts = TableStyle([
     ('VALIGN',      ZZ, MM, 'TOP'),
-    ('LEFTPADDING', ZZ, MM, cellMargin),
-    ('RIGHTPADDING',ZZ, MM, cellMargin),
-    ('TOPPADDING',  ZZ, MM, cellTop)
+    ('LEFTPADDING', ZZ, MM, cardXMargin),
+    ('RIGHTPADDING',ZZ, MM, cardXMargin),
+    ('TOPPADDING',  ZZ, MM, cardYMargin)
 ])
 
 cts = TableStyle([
@@ -154,13 +156,13 @@ def setBlackColor(black_cards=False):
 def reviseCPS(text, cps):
 
     # Split in Lines to check HEIGHT
-    lines = simpleSplit(text, cps.fontName, cps.fontSize, maxWidth)
+    lines = simpleSplit(text, cps.fontName, cps.fontSize, textMaxWidth)
 
     # While height exceed the maxHeight - keeps shrinking text size
-    while cps.leading * len(lines) > maxHeight:
+    while cps.leading * len(lines) > textMaxHeight:
         cps.fontSize -= 1
         cps.leading -= 0.6
-        lines = simpleSplit(text, cps.fontName, cps.fontSize, maxWidth)
+        lines = simpleSplit(text, cps.fontName, cps.fontSize, textMaxWidth)
 
     # Search the line with the biggest width
     lines_width = [stringWidth(line, cps.fontName, cps.fontSize) for line in lines]
@@ -169,7 +171,7 @@ def reviseCPS(text, cps):
     biggest_line = lines[biggest_line_index]
 
     # While width exceed the maxWidth - keeps shrinking text size
-    while biggest_line_width > maxWidth:
+    while biggest_line_width > textMaxWidth:
         cps.fontSize -= 1
         cps.leading -= 0.6
         biggest_line_width = stringWidth(biggest_line, cps.fontName, cps.fontSize)
@@ -204,7 +206,7 @@ def stringsToDT(strings):
                 [Paragraph(text, cps)],
                 [img]
             ],
-            rowHeights = cellAboveImageHeight,
+            rowHeights = imgTop,
             style = cts
         )
 
