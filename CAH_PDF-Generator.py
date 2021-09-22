@@ -176,14 +176,14 @@ def reviseCPS(text, cps):
         lineWidth = stringWidth(k, cps.fontName, cps.fontSize)
 
 
-def stringsToDT(List):
+def stringsToDT(strings):
 
-    data = []
+    data_table = []
 
     for i in range(col*rows):
 
         # Try to get a string
-        try: text = List.pop(0)
+        try: text = strings.pop(0)
         except: break
 
         # Clone the ParagraphStyle
@@ -197,7 +197,7 @@ def stringsToDT(List):
             print(f"Text Shortened (to {cps.fontSize}): {text}")
 
         # At the start of a column, append another list
-        if i % col == 0: data.append([])
+        if i % col == 0: data_table.append([])
 
         # Create the table
         table = Table(
@@ -210,9 +210,9 @@ def stringsToDT(List):
         )
 
         # Append the table in the current column list
-        data[i//col].append(table)
+        data_table[i//col].append(table)
 
-    return data
+    return data_table
 
 
 def createBackDT(qtd):
