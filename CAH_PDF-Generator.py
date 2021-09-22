@@ -49,10 +49,9 @@ logoForBlack = "res/CAHLogoInverted.png"
 
 
 # ----------------------------------------------
-UseDialogBoxes = True
 
-if UseDialogBoxes and not INPUT_FILE:
-    INPUT_FILE = dialogSelectInputFile()
+if not INPUT_FILE:
+    INPUT_FILE = CAH_Database.dialogSelectInputFile()
 
 # -------------------
 
