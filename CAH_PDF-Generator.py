@@ -108,7 +108,7 @@ def main():
 
     # From Reportlab
 
-    img = Image(logoForWhite, imgWidth, imgHeight)
+    img = [Image(logoForWhite, imgWidth, imgHeight)]
 
     ps = ParagraphStyle(
         'title',
@@ -149,7 +149,7 @@ def main():
         bg   = grayClr(1 if not black_cards else blackValue)
         grid = grayClr((1 - gridBlackValue) if black_cards else gridBlackValue)
 
-        img = Image(logo, imgWidth, imgHeight)
+        img[0] = Image(logo, imgWidth, imgHeight)
         ps.textColor = tclr
         ts.add('BACKGROUND',ZZ,MM, bg)
         ts.add('GRID',ZZ,MM, 0.0000000000001, grid)
@@ -206,7 +206,7 @@ def main():
             table = Table(
                 [
                     [Paragraph(text, cps)],
-                    [img]
+                    img
                 ],
                 rowHeights = imgTop,
                 style = cts
