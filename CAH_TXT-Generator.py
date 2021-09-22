@@ -8,23 +8,16 @@ def main():
     parser = argparse.ArgumentParser(description='Rewritte a .txt file of CAH_Database to be a little prettier :D')
     parser.add_argument('--input_file',  type=str, help='the .txt file you want rewritten')
     parser.add_argument('--output_file', type=str, default='', help='the output file. (optional)')
-    parser.add_argument('--language',    type=str, default='', help='language of information. Default is ENG but currently can accept "pt-br" too.')
     args = parser.parse_args()
 
     INPUT_FILE = args.input_file
     OUTPUT_FILE = args.output_file
-    LANG = args.language.lower()
 
     # ----------------------------------------------
 
-    if LANG == 'pt-br' or LANG == 'br':
-        fmt = "-formatado"
-        winfs = " Cada linha a partir daqui vai ser considerado uma CARTA BRANCA"
-        binfs = " Cada linha a partir daqui vai ser considerado uma CARTA PRETA"
-    else:
-        fmt = "-formatted"
-        winfs = " Each line from here will be considered a WHITE CARD"
-        binfs = " Each line from here will be considered a BLACK CARD"
+    fmt = "-formatted"
+    winfs = " Each line from here will be considered a WHITE CARD"
+    binfs = " Each line from here will be considered a BLACK CARD"
 
     # ----------------------------------------------
 
