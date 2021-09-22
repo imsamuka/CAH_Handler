@@ -139,21 +139,19 @@ ALL_tables = []
 def grayClr(v): return (v,v,v)
 
 
-def setColors(SetBlackCards=False):
+def setColors(black_cards=False):
     global ps, ts, img
     # Depend on blackValue and gridBlackValue (Range 0-255)
-    if not SetBlackCards:
-        # WhiteCards
-        img = Image(logoForWhite, imgWidth, imgHeight)
-        ps.textColor = grayClr(blackValue/255)
-        ts.add('BACKGROUND',ZZ,MM, grayClr(1))
-        ts.add('GRID',ZZ,MM, 0.0000000000001, grayClr(gridBlackValue/255))
-    else:
-        # BlackCards
-        img = Image(logoForBlack, imgWidth, imgHeight)
-        ps.textColor = grayClr(1)
-        ts.add('BACKGROUND', ZZ, MM, grayClr(blackValue/255))
-        ts.add('GRID', ZZ, MM, 0.0000000000001, grayClr(1 - gridBlackValue/255))
+
+    logo = logoForBlack if black_cards else logoForWhite
+    tclr = grayClr(1 if black_cards else blackValue/255)
+    bg   = grayClr(1 if not black_cards else blackValue/255)
+    grid = grayClr(1 - gridBlackValue/255) if black_cards else grayClr(gridBlackValue/255)
+
+    img = Image(logo, imgWidth, imgHeight)
+    ps.textColor = tclr
+    ts.add('BACKGROUND',ZZ,MM, bg)
+    ts.add('GRID',ZZ,MM, 0.0000000000001, grid)
 
 
 def reviseCPS(text, cps):
