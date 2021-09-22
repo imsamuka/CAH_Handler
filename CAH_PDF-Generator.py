@@ -257,8 +257,7 @@ def fillExcessGap(excess, tables=ALL_tables):
     if gap_size <= 0: return
 
     filler_data_table = [[''] for i in range(gap_size)]
-    table = Table(filler_data_table, cardWidth, cardHeight)
-    tables.append(table)
+    appendDataTable(filler_data_table, tables=tables, style=None)
 
 
 ###################################################################
