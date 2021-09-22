@@ -29,7 +29,7 @@ def clamp(v,min,max):
 parser = argparse.ArgumentParser(description='Read a ".txt" file of CAH_Database to generate a printable ".pdf" file.')
 parser.add_argument('--input_file', type=str,  help='the ".txt" file you want to generate ".pdf" from')
 parser.add_argument('--output_file', type=str, default="", help='the output ".pdf" file. (optional - if not included, it will just modify the input file name)')
-parser.add_argument('--pagesize', type=str, default="(210,297)", help="tuple of dimensions in mm (millimeter) of the page. Default is A4: (210,297)") 
+parser.add_argument('--pagesize', type=str, default="(210,297)", help="tuple of dimensions in mm (millimeter) of the page. Default is A4: (210,297)")
 parser.add_argument('--cardsize', type=str, default="(50,50)", help="tuple of dimensions in mm (millimeter) of the card. Default is (50,50)")
 parser.add_argument('--margin', type=float, default=5.0, help="size in mm (millimeter) of the margin. Default is 5")
 parser.add_argument('--blackValue', type=int, default=0, help="the black from cards text and background. It ranges from 0 (black - default) to 255 (white)")
@@ -67,13 +67,16 @@ if UseDialogBoxes and INPUT_FILE == None:
 
 assert INPUT_FILE != None , 'There is no input file! Insert one by adding a "--input_file" argument and then your file'
 
-if not len(OUTPUT_FILE) >= 1:
-    if '.' in INPUT_FILE:
-        OUTPUT_FILE = INPUT_FILE.split('.')
-        OUTPUT_FILE[-1] = 'pdf'
-        OUTPUT_FILE = '.'.join(OUTPUT_FILE)
+if not OUTPUT_FILE:
+    # Split the input file path by '/'
+    path_list = INPUT_FILE.split("/")
+    if "." in path_list[-1]:
+        # Split the filename by '.' (extension)
+        fn = path_list[-1].split(".", 1)
+        path_list[-1] = fn[0] + ".pdf"
     else:
-        OUTPUT_FILE = INPUT_FILE + '.pdf'
+        path_list[-1] += ".pdf"
+    OUTPUT_FILE = "/".join(path_list)
 # ----------------------------------------------
 
 
@@ -146,9 +149,9 @@ def reviseCPS(text,cps):
         cps.fontSize-=1
         cps.leading-=0.6
         lines = simpleSplit(text,cps.fontName,cps.fontSize,maxWidth)
-        
+
     # Get Lines WIDTH
-    lineWidth = [stringWidth(k, cps.fontName, cps.fontSize) for k in lines] 
+    lineWidth = [stringWidth(k, cps.fontName, cps.fontSize) for k in lines]
 
     k = lines[lineWidth.index(max(lineWidth))]
     lineWidth = lineWidth[lineWidth.index(max(lineWidth))]
@@ -157,7 +160,7 @@ def reviseCPS(text,cps):
         cps.fontSize-=1
         cps.leading-=0.6
         lineWidth = stringWidth(k, cps.fontName, cps.fontSize)
-    
+
 
 
 def getData(list):
@@ -173,13 +176,13 @@ def getData(list):
 
         # Tell me the SIZE if it Changes
         if not cps.fontSize == ps.fontSize:
-            
+
             print("Text Shortened:",text)
             print("Size:",cps.fontSize)
 
         if i%col == 0:
             data.append([])
-        
+
         table = Table( [
                 [Paragraph(text, cps)],
                 [img]  ],
@@ -191,7 +194,7 @@ def getData(list):
 def getBackTb(qtd):
     text = "Cards Against Humanity"
     cps = ps.clone('')
-    
+
     cps.fontName='Helvetica-Bold'
     cps.fontSize=backlogofontsize
     cps.leading=cps.fontSize+2
@@ -207,7 +210,7 @@ def getBackTb(qtd):
 
 def excessTable(qtd):
     global ALL_tables
-    
+
     pageShift = rows - ceil(qtd/col)
     if pageShift:
         blank = [[''] for i in range(pageShift)]
