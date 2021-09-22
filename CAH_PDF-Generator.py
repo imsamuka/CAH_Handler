@@ -285,6 +285,6 @@ pdf = SimpleDocTemplate(
     OUTPUT_FILE,
     pagesize=pagesize,
     topMargin=margin, leftMargin=margin, bottomMargin=margin, rightMargin=margin,
-    title=title, author=author, creator=author, producer=author, lang='por'
+    title=title, author=author, creator=author, producer=author
 )
 pdf.build(ALL_tables)
