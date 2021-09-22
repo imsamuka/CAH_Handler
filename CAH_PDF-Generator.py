@@ -34,7 +34,8 @@ args = parser.parse_args()
 
 INPUT_FILE  = args.input_file
 OUTPUT_FILE = args.output_file
-pagesize    = args.pagesize
+pagesize    = ( mm*float(args.pagesize[1:-1].split(",")[0]),
+                mm*float(args.pagesize[1:-1].split(",")[1]) )
 cardWidth   = mm*float(args.cardsize[1:-1].split(",")[0])
 cardHeight  = mm*float(args.cardsize[1:-1].split(",")[1])
 margin      = mm*args.margin
@@ -73,9 +74,6 @@ if not OUTPUT_FILE:
 
 # Get the cards list
 wcList, bcList = CAH_Database.readTxtFile(INPUT_FILE)
-
-pagesize = tuple(pagesize[1:-1].split(","))
-pagesize = (float(pagesize[0])*mm,float(pagesize[1])*mm)
 
 # Invert page size if card is more wide than tall
 if cardWidth > cardHeight and pagesize[1] > pagesize[0]:
