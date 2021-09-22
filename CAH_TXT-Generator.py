@@ -19,16 +19,12 @@ LANG = args.language.lower()
 
 if LANG == 'pt-br' or LANG == 'br':
     fmt = "-formatado"
-    winfs = "Cada linha a partir daqui vai ser considerado uma CARTA BRANCA"
-    binfs = "Cada linha a partir daqui vai ser considerado uma CARTA PRETA"
+    winfs = " Cada linha a partir daqui vai ser considerado uma CARTA BRANCA"
+    binfs = " Cada linha a partir daqui vai ser considerado uma CARTA PRETA"
 else:
     fmt = "-formatted"
-    winfs = "Each line from here will be considered a WHITE CARD"
-    binfs = "Each line from here will be considered a BLACK CARD"
-
-winfs = ["\n", CAH_Database.COMMENT_CHAR + winfs + "\n"]
-binfs = ["\n", CAH_Database.COMMENT_CHAR + binfs + "\n"]
-
+    winfs = " Each line from here will be considered a WHITE CARD"
+    binfs = " Each line from here will be considered a BLACK CARD"
 
 # ----------------------------------------------
 UseDialogBoxes = True
@@ -66,29 +62,6 @@ if not OUTPUT_FILE:
 
 # ----------------------------------------------
 
-wcList, bcList = CAH_Database.readTxtFile(INPUT_FILE)
-tempList = []
-
-# --------- Creating a formated new File --------------
-
-try:
-    newFile = open(OUTPUT_FILE, "w", encoding="utf-8")
-except IOError:
-    print("Error: Couldn't open file to write")
-    exit(1)
-
-# -------- White Cards
-
-tempList = [i+"\n" for i in wcList]
-tempList[-1] = str(tempList[-1])[:-1]
-tempList = winfs + tempList
-tempList.insert(0,CAH_Database.WC_MARK)
-newFile.writelines(tempList)
-
-# -------- Black Cards
-
-tempList = [i+"\n" for i in bcList]
-tempList[-1] = str(tempList[-1])[:-1]
-tempList = binfs + tempList
-tempList.insert(0,"\n"*5 + CAH_Database.BC_MARK)
-newFile.writelines(tempList)
+cards = CAH_Database.readTxtFile(INPUT_FILE)
+infos = (winfs, binfs)
+CAH_Database.writeTxtFile(OUTPUT_FILE, cards, infos)

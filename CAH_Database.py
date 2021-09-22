@@ -26,8 +26,7 @@ def readTxtFile(filepath : str) -> tuple[list[str], list[str]]:
 
     reading_bc = False
 
-    try:
-        file = open(filepath,"r")
+    try: file = open(filepath,"r")
     except IOError:
         print("Error: Couldn't open and read file")
         exit(1)
@@ -51,3 +50,51 @@ def readTxtFile(filepath : str) -> tuple[list[str], list[str]]:
     unifyOnList(bcList, BC_BLANK_CHAR)
 
     return (wcList, bcList)
+
+def writeTxtFile(
+    filepath : str,
+    decks : tuple[list[str], list[str]],
+    infos : tuple[str, str] = ()
+    ) -> None:
+
+
+    try: file = open(filepath, "w", encoding="utf-8")
+    except IOError:
+        print("Error: Couldn't open file to write")
+        exit(1)
+
+    # Marks
+    marks = (WC_MARK, "\n"*4 + BC_MARK)
+
+    # For both decks
+    for i in range(2):
+
+        info = ''
+        if i < len(infos):
+            # Split the info by lines
+            info = infos[i].split("\n")
+
+            # Start every line that have something with COMMENT_CHAR
+            for k in range(len(info)):
+                if info[k]: info[k] = COMMENT_CHAR + info[k]
+
+            # Join the lines together
+            info = "\n".join(info)
+
+
+        # Add the mark
+        lines = marks[i] + "\n"
+
+        # Add the info below the mark
+        if info: lines += info + "\n"
+
+        # Add '\n' to every line
+        lines += "\n".join(decks[i]) + "\n"
+
+
+        try: file.write(lines)
+        except IOError:
+            print("Error: Couldn't write to file")
+            exit(1)
+
+    file.close()
