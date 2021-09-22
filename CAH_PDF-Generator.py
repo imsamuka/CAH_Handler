@@ -176,7 +176,7 @@ def reviseCPS(text, cps):
         lineWidth = stringWidth(k, cps.fontName, cps.fontSize)
 
 
-def getData(List):
+def stringsToDT(List):
 
     data = []
 
@@ -279,13 +279,13 @@ fillExcessGap(bcExcess)
 
 # ------- Get White Cards Tables -------
 setBlackColor(False)
-while wcList: appendDataTable(getData(wcList))
+while wcList: appendDataTable(stringsToDT(wcList))
 fillExcessGap(wcExcess)
 
 # ------- Get Black Cards Tables -------
 setBlackColor(True)
 CAH_Database.repeatOnList(bcList, '_', 3)
-while bcList: appendDataTable(getData(bcList))
+while bcList: appendDataTable(stringsToDT(bcList))
 fillExcessGap(bcExcess)
 
 # --------------- GENERATE FINAL PDF ---------------
