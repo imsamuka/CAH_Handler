@@ -251,12 +251,12 @@ def fillExcessGap(excess, tables):
 # ------- Get Back Cards Tables -------
 setColors()
 ALL_tables.append(Table(getBackTb(col*rows), cardWidth, cardHeight, style=ts))
-ALL_tables.append(Table(getBackTb(wcExcess), cardWidth, cardHeight, style=ts))
+if wcExcess: ALL_tables.append(Table(getBackTb(wcExcess), cardWidth, cardHeight, style=ts))
 fillExcessGap(wcExcess, ALL_tables)
 
 setColors(True)
 ALL_tables.append(Table(getBackTb(col*rows), cardWidth, cardHeight,style=ts))
-ALL_tables.append(Table(getBackTb(bcExcess), cardWidth, cardHeight,style=ts))
+if bcExcess: ALL_tables.append(Table(getBackTb(bcExcess), cardWidth, cardHeight,style=ts))
 fillExcessGap(bcExcess, ALL_tables)
 
 
