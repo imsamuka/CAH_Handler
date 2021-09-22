@@ -21,12 +21,21 @@ def clamp(v, min, max):
     if v > max: return max
     return v
 
+def grayClr(v): return (v,v,v)
+
 
 def main():
 
-    # Changeable Areas -----------------------------
+    # --------------------------------- Constants -------------------------------- #
 
-    # ArgumentParser
+    logoForWhite = "res/CAHLogo.png"
+    logoForBlack = "res/CAHLogoInverted.png"
+    ZZ = (0,0)
+    MM = (-1,-1)
+
+
+    # ------------------------------ ArgumentParser ------------------------------ #
+
     parser = argparse.ArgumentParser(description='Read a ".txt" file of CAH_Database to generate a printable ".pdf" file.')
     parser.add_argument('-i', '--input_file',  type=str, help='the ".txt" file you want to generate ".pdf" from')
     parser.add_argument('-o', '--output_file', type=str, help='the output ".pdf" file. (optional)')
@@ -52,22 +61,20 @@ def main():
     fontsize     = args.normalfontsize
     backfontsize = args.backfontsize
 
-    logoForWhite = "res/CAHLogo.png"
-    logoForBlack = "res/CAHLogoInverted.png"
+
+    # ---------------------- Validate Input and Output file ---------------------- #
 
 
-
-    # ----------------------------------------------
-
+    # If no INPUT_FILE from ArgumentParser, ask in a dialog
     if not INPUT_FILE:
         INPUT_FILE = CAH_Database.dialogSelectInputFile()
 
-    # -------------------
-
+    # Still no file? error!
     if not INPUT_FILE:
         print('There is no input file!\n Insert one by adding a "--input_file" argument and then your file')
         exit(1)
 
+    # Use INPUT_FILE + ".pdf" as the default OUTPUT_FILE
     if not OUTPUT_FILE:
         # Split the input file path by '/'
         path_list = INPUT_FILE.split("/")
@@ -78,7 +85,9 @@ def main():
         else:
             path_list[-1] += ".pdf"
         OUTPUT_FILE = "/".join(path_list)
-    # ----------------------------------------------
+
+
+    # --------------------------- Prepare the Variables -------------------------- #
 
     # Get the cards list
     wcList, bcList = CAH_Database.readTxtFile(INPUT_FILE)
@@ -87,26 +96,29 @@ def main():
     if cardWidth > cardHeight and pagesize[1] > pagesize[0]:
         pagesize = (pagesize[1], pagesize[0])
 
+    # Get card Margins
     cardXMargin = cardWidth*(3.5/50)
     cardYMargin = cardXMargin*3/4
 
+    # Get image logo sizes
     imgWidth  = cardWidth*3/4
     imgHeight = imgWidth*(158/876)
     imgTop = cardHeight - cardYMargin - imgHeight - 1.5*mm
 
+    # Get the maximum sizes text can occupy
     textMaxWidth  = cardWidth  - (2*cardXMargin)
     textMaxHeight = cardHeight - (2*cardYMargin) - imgHeight
 
+    # Number of columns and rows
     col  = int((pagesize[0] - 2*margin) // cardWidth)
     rows = int((pagesize[1] - 2*margin) // cardHeight)
 
+    # Excess - the cards that don't fit in a full page
     wcExcess = len(wcList) % (col*rows)
     bcExcess = len(bcList) % (col*rows)
 
-    ZZ = (0,0)
-    MM = (-1,-1)
 
-    # From Reportlab
+    # ------------------------- Variables From Reportlab ------------------------- #
 
     img = [Image(logoForWhite, imgWidth, imgHeight)]
 
@@ -137,10 +149,7 @@ def main():
     ALL_tables = []
 
 
-    ########################################################
-
-
-    def grayClr(v): return (v,v,v)
+    # --------------------------------- Functions -------------------------------- #
 
 
     def setBlackColor(black_cards=False):
@@ -264,10 +273,11 @@ def main():
         appendDataTable(filler_data_table, tables=tables, style=None)
 
 
-    ###################################################################
+
+    # --------------------------------- Execution -------------------------------- #
 
 
-    # ------- Get Back Cards Tables -------
+    # Insert the back of the Cards
     setBlackColor(False)
     appendDataTable(createBackDT(col*rows))
     appendDataTable(createBackDT(wcExcess))
@@ -279,29 +289,35 @@ def main():
     fillExcessGap(bcExcess)
 
 
-    # ------- Get White Cards Tables -------
+    # Insert the White Cards
     setBlackColor(False)
     while wcList: appendDataTable(stringsToDT(wcList))
     fillExcessGap(wcExcess)
 
-    # ------- Get Black Cards Tables -------
+
+    # Insert the Black Cards
     setBlackColor(True)
-    CAH_Database.repeatOnList(bcList, '_', 3)
+    CAH_Database.repeatOnList(bcList, '_', 3) # Repeat "_" --> "___"
     while bcList: appendDataTable(stringsToDT(bcList))
     fillExcessGap(bcExcess)
 
-    # --------------- GENERATE FINAL PDF ---------------
+
+
+    # ---------------------------- Generate Final PDF ---------------------------- #
 
     title="Cards Against Humanity - Customized"
     author = "ImSamuka"
 
     pdf = SimpleDocTemplate(
-        OUTPUT_FILE,
+        filename=OUTPUT_FILE,
         pagesize=pagesize,
         topMargin=margin, leftMargin=margin, bottomMargin=margin, rightMargin=margin,
         title=title, author=author, creator=author, producer=author
     )
+
+    # Build the archive
     pdf.build(ALL_tables)
+
 
 
 if __name__ == "__main__":
