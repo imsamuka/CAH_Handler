@@ -60,7 +60,12 @@ wcList, bcList = CAH_Database.readTxtFile(INPUT_FILE)
 tempList = []
 
 # --------- Creating a formated new File --------------
-newFile = open(OUTPUT_FILE, "w", encoding="utf-8")
+
+try:
+    newFile = open(OUTPUT_FILE, "w", encoding="utf-8")
+except IOError:
+    print("Error: Couldn't open file to write")
+    exit(1)
 
 # -------- White Cards
 

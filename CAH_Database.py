@@ -26,7 +26,11 @@ def readTxtFile(filepath : str) -> tuple[list[str], list[str]]:
 
     reading_bc = False
 
-    file = open(filepath,"r")
+    try:
+        file = open(filepath,"r")
+    except IOError:
+        print("Error: Couldn't open and read file")
+        exit(1)
 
     for line in file:
 
