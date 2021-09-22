@@ -2,10 +2,6 @@ import CAH_Database
 
 import argparse
 
-from tkinter import filedialog
-import tkinter
-import os, sys
-
 from math import ceil
 
 from reportlab.lib.units import mm
@@ -58,20 +54,7 @@ logoForBlack = "res/CAHLogoInverted.png"
 UseDialogBoxes = True
 
 if UseDialogBoxes and INPUT_FILE == None:
-    root = tkinter.Tk()
-    root.withdraw()
-
-    if sys.platform.startswith("linux"):
-        initialdir = os.environ['HOME']
-    elif sys.platform.startswith("win32") or sys.platform.startswith("cygwin"):
-        initialdir = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
-
-    INPUT_FILE = filedialog.askopenfilename(
-        parent = root,
-        initialdir=initialdir,
-        title='Select file',
-        filetypes = (("TXT files","*.txt") , )
-    )
+    INPUT_FILE = dialogSelectInputFile()
 
 # -------------------
 

@@ -6,6 +6,30 @@ COMMENT_CHAR = "#"
 
 # Functions
 
+def dialogSelectInputFile(initialdir : str = None) -> str:
+    from tkinter import filedialog, Tk
+    from sys import platform
+    from os import environ, path
+
+    if not initialdir:
+        if platform.startswith("linux"):
+            initialdir = environ['HOME']
+        elif platform.startswith("win32") or platform.startswith("cygwin"):
+            initialdir = path.join(path.join(environ['USERPROFILE']), 'Desktop')
+
+    root = Tk()
+    root.withdraw()
+
+    filepath = filedialog.askopenfilename(
+        parent = root,
+        initialdir = initialdir,
+        title = 'Select file',
+        filetypes = (("TXT files","*.txt") , )
+    )
+
+    return filepath or ""
+
+
 def unifyOnList(strings : list[str], char : str) -> None:
     dchar = char+char
     for i in range(len(strings)):
