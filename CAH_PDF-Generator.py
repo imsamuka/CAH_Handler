@@ -43,8 +43,8 @@ pagesize    = parseFloatTuple(args.pagesize, unit=mm)
 cardWidth, cardHeight = parseFloatTuple(args.cardsize, unit=mm)
 margin      = args.margin*mm
 
-blackValue     = clamp(args.blackValue, 0, 255)
-gridBlackValue = clamp(args.gridBlackValue, 0, 255)
+blackValue     = clamp(args.blackValue, 0, 255) / 255
+gridBlackValue = clamp(args.gridBlackValue, 0, 255) / 255
 
 fontsize     = args.normalfontsize
 backfontsize = args.backfontsize
@@ -144,10 +144,10 @@ def setBlackColor(black_cards=False):
     global ps, ts, img
     # Depend on blackValue and gridBlackValue (Range 0-255)
 
-    logo = logoForBlack if black_cards else logoForWhite
-    tclr = grayClr(1 if black_cards else blackValue/255)
-    bg   = grayClr(1 if not black_cards else blackValue/255)
-    grid = grayClr(1 - gridBlackValue/255) if black_cards else grayClr(gridBlackValue/255)
+    logo = logoForBlack if  black_cards else logoForWhite
+    tclr = grayClr(1 if     black_cards else blackValue)
+    bg   = grayClr(1 if not black_cards else blackValue)
+    grid = grayClr((1 - gridBlackValue) if black_cards else gridBlackValue)
 
     img = Image(logo, imgWidth, imgHeight)
     ps.textColor = tclr
