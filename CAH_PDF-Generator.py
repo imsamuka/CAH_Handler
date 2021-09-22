@@ -226,11 +226,11 @@ def createBackDT(qtd):
 
     reviseCPS(text, cps)
 
-    data = []
+    data_table = []
     for i in range(qtd):
-        if i % col == 0: data.append([])
-        data[i//col].append(Paragraph(text, cps))
-    return data
+        if i % col == 0: data_table.append([])
+        data_table[i//col].append(Paragraph(text, cps))
+    return data_table
 
 
 def appendDataTable(data_table, tables=ALL_tables, style=ts):
@@ -257,8 +257,8 @@ def fillExcessGap(excess, tables=ALL_tables):
     gap_size = rows - (1 + excess//col)
     if gap_size <= 0: return
 
-    fillers = [[''] for i in range(gap_size)]
-    table = Table(fillers, cardWidth, cardHeight)
+    filler_data_table = [[''] for i in range(gap_size)]
+    table = Table(filler_data_table, cardWidth, cardHeight)
     tables.append(table)
 
 
