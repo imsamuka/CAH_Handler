@@ -99,6 +99,9 @@ rows = int((pagesize[1] - 2*margin) // cardHeight)
 wcExcess = len(wcList) % (col*rows)
 bcExcess = len(bcList) % (col*rows)
 
+ZZ = (0,0)
+MM = (-1,-1)
+
 # From Reportlab
 
 img = Image(logoForWhite, imgWidth, imgHeight)
@@ -112,18 +115,18 @@ ps = ParagraphStyle(
 )
 
 ts = TableStyle([
-    ('VALIGN',      (0,0), (-1,-1), 'TOP'),
-    ('LEFTPADDING', (0,0), (-1,-1), cellMargin),
-    ('RIGHTPADDING',(0,0), (-1,-1), cellMargin),
-    ('TOPPADDING',  (0,0), (-1,-1), cellTop)
+    ('VALIGN',      ZZ, MM, 'TOP'),
+    ('LEFTPADDING', ZZ, MM, cellMargin),
+    ('RIGHTPADDING',ZZ, MM, cellMargin),
+    ('TOPPADDING',  ZZ, MM, cellTop)
 ])
 
 cts = TableStyle([
-    ('VALIGN',       (0,0), (-1,-1), 'TOP'),
-    ('LEFTPADDING',  (0,0), (-1,-1), 0),
-    ('RIGHTPADDING', (0,0), (-1,-1), 0),
-    ('TOPPADDING',   (0,0), (-1,-1), 0),
-    ('BOTTOMPADDING',(0,0), (-1,-1), 0)
+    ('VALIGN',       ZZ, MM, 'TOP'),
+    ('LEFTPADDING',  ZZ, MM, 0),
+    ('RIGHTPADDING', ZZ, MM, 0),
+    ('TOPPADDING',   ZZ, MM, 0),
+    ('BOTTOMPADDING',ZZ, MM, 0)
 ])
 
 
@@ -143,14 +146,14 @@ def setColors(SetBlackCards=False):
         # WhiteCards
         img = Image(logoForWhite, imgWidth, imgHeight)
         ps.textColor = grayClr(blackValue/255)
-        ts.add('BACKGROUND',(0,0),(-1,-1), grayClr(1))
-        ts.add('GRID',(0,0),(-1,-1), 0.0000000000001, grayClr(gridBlackValue/255))
+        ts.add('BACKGROUND',ZZ,MM, grayClr(1))
+        ts.add('GRID',ZZ,MM, 0.0000000000001, grayClr(gridBlackValue/255))
     else:
         # BlackCards
         img = Image(logoForBlack, imgWidth, imgHeight)
         ps.textColor = grayClr(1)
-        ts.add('BACKGROUND', (0,0), (-1,-1), grayClr(blackValue/255))
-        ts.add('GRID', (0,0), (-1,-1), 0.0000000000001, grayClr(1 - gridBlackValue/255))
+        ts.add('BACKGROUND', ZZ, MM, grayClr(blackValue/255))
+        ts.add('GRID', ZZ, MM, 0.0000000000001, grayClr(1 - gridBlackValue/255))
 
 
 def reviseCPS(text, cps):
