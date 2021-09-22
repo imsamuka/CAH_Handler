@@ -250,7 +250,7 @@ def appendDataTable(data_table, tables=ALL_tables, style=ts):
     tables.append(table)
 
 
-def fillExcessGap(excess, tables):
+def fillExcessGap(excess, tables=ALL_tables):
     if excess <= 0: return
 
     # (1 + excess//col) -> How many rows the excess occupies
@@ -269,24 +269,24 @@ def fillExcessGap(excess, tables):
 setBlackColor(False)
 appendDataTable(getBackTb(col*rows))
 appendDataTable(getBackTb(wcExcess))
-fillExcessGap(wcExcess, ALL_tables)
+fillExcessGap(wcExcess)
 
 setBlackColor(True)
 appendDataTable(getBackTb(col*rows))
 appendDataTable(getBackTb(bcExcess))
-fillExcessGap(bcExcess, ALL_tables)
+fillExcessGap(bcExcess)
 
 
 # ------- Get White Cards Tables -------
 setBlackColor(False)
 while wcList: appendDataTable(getData(wcList))
-fillExcessGap(wcExcess, ALL_tables)
+fillExcessGap(wcExcess)
 
 # ------- Get Black Cards Tables -------
 setBlackColor(True)
 CAH_Database.repeatOnList(bcList, '_', 3)
 while bcList: appendDataTable(getData(bcList))
-fillExcessGap(bcExcess, ALL_tables)
+fillExcessGap(bcExcess)
 
 # --------------- GENERATE FINAL PDF ---------------
 
