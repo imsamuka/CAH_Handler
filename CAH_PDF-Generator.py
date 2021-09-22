@@ -194,8 +194,7 @@ def getData(List):
 
         # Tell me the SIZE if it Changes
         if cps.fontSize != ps.fontSize:
-            print("Text Shortened:",text)
-            print("Size:",cps.fontSize)
+            print(f"Text Shortened (to {cps.fontSize}): {text}")
 
         # At the start of a column, append another list
         if i % col == 0: data.append([])
