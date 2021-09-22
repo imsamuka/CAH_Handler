@@ -233,6 +233,23 @@ def getBackTb(qtd):
     return data
 
 
+def appendDataTable(data_table, tables=ALL_tables, style=ts):
+
+    # Must have at least a row and column - at least [[[]]]
+    if not data_table or not data_table[0]: return
+
+    # Create the data table
+    table = Table(
+        data_table,
+        colWidths = cardWidth,
+        rowHeights = cardHeight,
+        style = style
+    )
+
+    # Append to tables list
+    tables.append(table)
+
+
 def fillExcessGap(excess, tables):
     if excess <= 0: return
 
@@ -250,31 +267,25 @@ def fillExcessGap(excess, tables):
 
 # ------- Get Back Cards Tables -------
 setBlackColor(False)
-ALL_tables.append(Table(getBackTb(col*rows), cardWidth, cardHeight, style=ts))
-if wcExcess: ALL_tables.append(Table(getBackTb(wcExcess), cardWidth, cardHeight, style=ts))
+appendDataTable(getBackTb(col*rows))
+appendDataTable(getBackTb(wcExcess))
 fillExcessGap(wcExcess, ALL_tables)
 
 setBlackColor(True)
-ALL_tables.append(Table(getBackTb(col*rows), cardWidth, cardHeight,style=ts))
-if bcExcess: ALL_tables.append(Table(getBackTb(bcExcess), cardWidth, cardHeight,style=ts))
+appendDataTable(getBackTb(col*rows))
+appendDataTable(getBackTb(bcExcess))
 fillExcessGap(bcExcess, ALL_tables)
 
 
 # ------- Get White Cards Tables -------
 setBlackColor(False)
-while wcList:
-    table = Table(getData(wcList), cardWidth, cardHeight, style=ts)
-    ALL_tables.append(table)
+while wcList: appendDataTable(getData(wcList))
 fillExcessGap(wcExcess, ALL_tables)
 
 # ------- Get Black Cards Tables -------
 setBlackColor(True)
-
 CAH_Database.repeatOnList(bcList, '_', 3)
-
-while bcList:
-    table = Table(getData(bcList), cardWidth, cardHeight, style=ts)
-    ALL_tables.append(table)
+while bcList: appendDataTable(getData(bcList))
 fillExcessGap(bcExcess, ALL_tables)
 
 # --------------- GENERATE FINAL PDF ---------------
