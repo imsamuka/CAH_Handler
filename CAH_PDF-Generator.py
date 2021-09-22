@@ -139,7 +139,7 @@ ALL_tables = []
 def grayClr(v): return (v,v,v)
 
 
-def setColors(black_cards=False):
+def setBlackColor(black_cards=False):
     global ps, ts, img
     # Depend on blackValue and gridBlackValue (Range 0-255)
 
@@ -250,26 +250,26 @@ def fillExcessGap(excess, tables):
 
 
 # ------- Get Back Cards Tables -------
-setColors()
+setBlackColor(False)
 ALL_tables.append(Table(getBackTb(col*rows), cardWidth, cardHeight, style=ts))
 if wcExcess: ALL_tables.append(Table(getBackTb(wcExcess), cardWidth, cardHeight, style=ts))
 fillExcessGap(wcExcess, ALL_tables)
 
-setColors(True)
+setBlackColor(True)
 ALL_tables.append(Table(getBackTb(col*rows), cardWidth, cardHeight,style=ts))
 if bcExcess: ALL_tables.append(Table(getBackTb(bcExcess), cardWidth, cardHeight,style=ts))
 fillExcessGap(bcExcess, ALL_tables)
 
 
 # ------- Get White Cards Tables -------
-setColors()
+setBlackColor(False)
 while wcList:
     table = Table(getData(wcList), cardWidth, cardHeight, style=ts)
     ALL_tables.append(table)
 fillExcessGap(wcExcess, ALL_tables)
 
 # ------- Get Black Cards Tables -------
-setColors(True)
+setBlackColor(True)
 
 CAH_Database.repeatOnList(bcList, '_', 3)
 
