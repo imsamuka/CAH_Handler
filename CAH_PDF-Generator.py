@@ -26,10 +26,10 @@ parser.add_argument('-o', '--output_file', type=str, help='the output ".pdf" fil
 parser.add_argument('--pagesize', type=str, default="(210,297)", help="tuple of dimensions in mm (millimeter) of the page. Default is A4: (210,297)")
 parser.add_argument('--cardsize', type=str, default="(50,50)",   help="tuple of dimensions in mm (millimeter) of the card. Default is (50,50)")
 parser.add_argument('--margin', type=float, default=5.0,         help="size in mm (millimeter) of the margin. Default is 5")
-parser.add_argument('--blackValue',       type=int, default=0,   help="the black from text and background. It ranges from 0 (black - default) to 255 (white)")
-parser.add_argument('--gridBlackValue',   type=int, default=150, help="the black from white cards grid. Default is 150. It ranges from 0 (black) to 255 (white)")
-parser.add_argument('--normalfontsize',   type=int, default=16,  help="normal text size. Default is 16")
-parser.add_argument('--backlogofontsize', type=int, default=22,  help="back of cards text size. Default is 22")
+parser.add_argument('--blackValue',     type=int, default=0,   help="the black from text and background. It ranges from 0 (black - default) to 255 (white)")
+parser.add_argument('--gridBlackValue', type=int, default=150, help="the black from white cards grid. Default is 150. It ranges from 0 (black) to 255 (white)")
+parser.add_argument('--normalfontsize', type=int, default=16,  help="normal text size. Default is 16")
+parser.add_argument('--backfontsize',   type=int, default=22,  help="back of cards text size. Default is 22")
 args = parser.parse_args()
 
 INPUT_FILE  = args.input_file
@@ -42,7 +42,7 @@ margin      = mm*args.margin
 blackValue  = clamp(args.blackValue, 0, 255)
 gridBlackValue = clamp(args.gridBlackValue, 0, 255)
 fontSize = args.normalfontsize
-backlogofontsize = args.backlogofontsize
+backfontsize = args.backfontsize
 
 logoForWhite = "res/CAHLogo.png"
 logoForBlack = "res/CAHLogoInverted.png"
@@ -220,7 +220,7 @@ def createBackDT(qtd):
 
     # Change the ParagraphStyle Clone
     cps.fontName = 'Helvetica-Bold'
-    cps.fontSize = backlogofontsize
+    cps.fontSize = backfontsize
     cps.leading  = cps.fontSize+2
 
     reviseCPS(text, cps)
