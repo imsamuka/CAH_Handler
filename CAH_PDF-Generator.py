@@ -23,8 +23,8 @@ def clamp(v,min,max):
 
 # ArgumentParser
 parser = argparse.ArgumentParser(description='Read a ".txt" file of CAH_Database to generate a printable ".pdf" file.')
-parser.add_argument('--input_file', type=str,  help='the ".txt" file you want to generate ".pdf" from')
-parser.add_argument('--output_file', type=str, default="", help='the output ".pdf" file. (optional - if not included, it will just modify the input file name)')
+parser.add_argument('-i', '--input_file',  type=str, help='the ".txt" file you want to generate ".pdf" from')
+parser.add_argument('-o', '--output_file', type=str, help='the output ".pdf" file. (optional)')
 parser.add_argument('--pagesize', type=str, default="(210,297)", help="tuple of dimensions in mm (millimeter) of the page. Default is A4: (210,297)")
 parser.add_argument('--cardsize', type=str, default="(50,50)", help="tuple of dimensions in mm (millimeter) of the card. Default is (50,50)")
 parser.add_argument('--margin', type=float, default=5.0, help="size in mm (millimeter) of the margin. Default is 5")

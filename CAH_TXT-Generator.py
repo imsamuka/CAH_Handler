@@ -6,8 +6,8 @@ def main():
     # ArgumentParser -------------------------------
 
     parser = argparse.ArgumentParser(description='Rewritte a .txt file of CAH_Database to be a little prettier :D')
-    parser.add_argument('--input_file',  type=str, help='the .txt file you want rewritten')
-    parser.add_argument('--output_file', type=str, default='', help='the output file. (optional)')
+    parser.add_argument('-i', '--input_file',  type=str, help='the .txt file you want rewritten')
+    parser.add_argument('-o', '--output_file', type=str, help='the output file. (optional)')
     args = parser.parse_args()
 
     INPUT_FILE = args.input_file
