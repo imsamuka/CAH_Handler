@@ -72,30 +72,12 @@ def decksFromString(string : str) -> tuple[list[str], list[str]]:
     return (wcList, bcList)
 
 
-def readTxtFile(filepath : str) -> tuple[list[str], list[str]]:
-
-    try:
-        file = open(filepath,"r")
-        string = file.read()
-        file.close()
-    except IOError:
-        print("Error: Couldn't open and read file")
-        exit(1)
-
-    return decksFromString(string)
-
-
-def writeTxtFile(
-    filepath : str,
+def decksToString(
     decks : tuple[list[str], list[str]],
     infos : tuple[str, str] = ()
-    ) -> None:
+    ) -> str:
 
-
-    try: file = open(filepath, "w", encoding="utf-8")
-    except IOError:
-        print("Error: Couldn't open file to write")
-        exit(1)
+    string = ""
 
     # Marks
     marks = (WC_MARK, "\n"*4 + BC_MARK)
@@ -117,18 +99,40 @@ def writeTxtFile(
 
 
         # Add the mark
-        lines = marks[i] + "\n"
+        string += marks[i] + "\n"
 
         # Add the info below the mark
-        if info: lines += info + "\n"
+        if info: string += info + "\n"
 
         # Add '\n' to every line
-        lines += "\n".join(decks[i]) + "\n"
+        string += "\n".join(decks[i]) + "\n"
+
+    return string
 
 
-        try: file.write(lines)
-        except IOError:
-            print("Error: Couldn't write to file")
-            exit(1)
+def readTxtFile(filepath : str) -> tuple[list[str], list[str]]:
+    try:
+        file = open(filepath,"r")
+        string = file.read()
+        file.close()
+    except IOError:
+        print("Error: Couldn't open and read file")
+        exit(1)
 
-    file.close()
+    return decksFromString(string)
+
+
+def writeTxtFile(
+    filepath : str,
+    decks : tuple[list[str], list[str]],
+    infos : tuple[str, str] = ()
+    ) -> None:
+
+    try:
+        file = open(filepath, "w", encoding="utf-8")
+        string = decksToString(decks, infos)
+        file.write(string)
+        file.close()
+    except IOError:
+        print("Error: Couldn't open and write file to write")
+        exit(1)
