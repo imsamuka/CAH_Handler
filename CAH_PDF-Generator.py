@@ -12,6 +12,10 @@ from reportlab.pdfbase.pdfmetrics import stringWidth
 
 from reportlab.platypus import Table, TableStyle, Paragraph, SimpleDocTemplate, Image
 
+def parseFloatTuple(string : str, unit = 1):
+    l = string.strip()[1:-1].split(",")
+    return (float(l[0])*unit, float(l[1])*unit)
+
 def clamp(v, min, max):
     if v < min: return min
     if v > max: return max
@@ -35,11 +39,9 @@ args = parser.parse_args()
 INPUT_FILE  = args.input_file
 OUTPUT_FILE = args.output_file
 
-pagesize    = ( mm*float(args.pagesize[1:-1].split(",")[0]),
-                mm*float(args.pagesize[1:-1].split(",")[1]) )
-cardWidth  = mm*float(args.cardsize[1:-1].split(",")[0])
-cardHeight = mm*float(args.cardsize[1:-1].split(",")[1])
-margin      = mm*args.margin
+pagesize    = parseFloatTuple(args.pagesize, unit=mm)
+cardWidth, cardHeight = parseFloatTuple(args.cardsize, unit=mm)
+margin      = args.margin*mm
 
 blackValue     = clamp(args.blackValue, 0, 255)
 gridBlackValue = clamp(args.gridBlackValue, 0, 255)
