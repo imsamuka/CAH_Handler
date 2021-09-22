@@ -6,6 +6,7 @@ COMMENT_CHAR = "#"
 
 # Functions
 
+
 def dialogSelectInputFile(initialdir : str = None) -> str:
     from tkinter import filedialog, Tk
     from sys import platform
@@ -36,13 +37,15 @@ def unifyOnList(strings : list[str], char : str) -> None:
         while dchar in strings[i]:
             strings[i] = strings[i].replace(dchar,char)
 
+
 def repeatOnList(strings : list[str], char : str, n : int) -> None:
     nchar = char*n
     for i in range(len(strings)):
         if char in strings[i]:
             strings[i] = strings[i].replace(char,nchar)
 
-def readTxtFile(filepath : str) -> tuple[list[str], list[str]]:
+
+def decksFromString(string : str) -> tuple[list[str], list[str]]:
     IGNORE_CHARS = COMMENT_CHAR + WC_MARK[0] + BC_MARK[0]
 
     wcList = [] # WhiteCards
@@ -50,14 +53,9 @@ def readTxtFile(filepath : str) -> tuple[list[str], list[str]]:
 
     reading_bc = False
 
-    try: file = open(filepath,"r")
-    except IOError:
-        print("Error: Couldn't open and read file")
-        exit(1)
+    for line in string.splitlines():
 
-    for line in file:
-
-        line = line.strip(" \n")
+        line = line.strip()
         if not line: continue
 
         if line[0] in IGNORE_CHARS:
@@ -68,12 +66,24 @@ def readTxtFile(filepath : str) -> tuple[list[str], list[str]]:
         if reading_bc: bcList.append(line)
         else:          wcList.append(line)
 
-    file.close()
-
     # Unifying "_" on Black Cards: "____" --> "_"
     unifyOnList(bcList, BC_BLANK_CHAR)
 
     return (wcList, bcList)
+
+
+def readTxtFile(filepath : str) -> tuple[list[str], list[str]]:
+
+    try:
+        file = open(filepath,"r")
+        string = file.read()
+        file.close()
+    except IOError:
+        print("Error: Couldn't open and read file")
+        exit(1)
+
+    return decksFromString(string)
+
 
 def writeTxtFile(
     filepath : str,
