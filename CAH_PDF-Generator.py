@@ -158,22 +158,23 @@ def reviseCPS(text, cps):
     # Split in Lines to check HEIGHT
     lines = simpleSplit(text, cps.fontName, cps.fontSize, maxWidth)
 
+    # While height exceed the maxHeight - keeps shrinking text size
     while cps.leading * len(lines) > maxHeight:
         cps.fontSize -= 1
         cps.leading -= 0.6
         lines = simpleSplit(text, cps.fontName, cps.fontSize, maxWidth)
 
-    # Get Lines WIDTH
-    lineWidth = [stringWidth(k, cps.fontName, cps.fontSize) for k in lines]
-
     # Search the line with the biggest width
-    k         = lines[    lineWidth.index(max(lineWidth))]
-    lineWidth = lineWidth[lineWidth.index(max(lineWidth))]
+    lines_width = [stringWidth(line, cps.fontName, cps.fontSize) for line in lines]
+    biggest_line_index = lines_width.index(max(lines_width))
+    biggest_line_width  = lines_width[biggest_line_index]
+    biggest_line = lines[biggest_line_index]
 
-    while lineWidth > maxWidth:
+    # While width exceed the maxWidth - keeps shrinking text size
+    while biggest_line_width > maxWidth:
         cps.fontSize -= 1
         cps.leading -= 0.6
-        lineWidth = stringWidth(k, cps.fontName, cps.fontSize)
+        biggest_line_width = stringWidth(biggest_line, cps.fontName, cps.fontSize)
 
 
 def stringsToDT(strings):
