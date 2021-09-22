@@ -3,7 +3,7 @@ import argparse
 
 from tkinter import filedialog
 import tkinter
-import os
+import os, sys
 
 # ArgumentParser ------------------
 parser = argparse.ArgumentParser(description='Rewritte a .txt file of CAH_Database to be a little prettier :D')
@@ -36,8 +36,18 @@ UseDialogBoxes = True
 if UseDialogBoxes and not INPUT_FILE:
     root = tkinter.Tk()
     root.withdraw()
-    desktop = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
-    INPUT_FILE = filedialog.askopenfilename(parent = root,initialdir=desktop,title='Select file',  filetypes = (("TXT files","*.txt") , )    )
+
+    if sys.platform.startswith("linux"):
+        initialdir = os.environ['HOME']
+    elif sys.platform.startswith("win32") or sys.platform.startswith("cygwin"):
+        initialdir = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
+
+    INPUT_FILE = filedialog.askopenfilename(
+        parent = root,
+        initialdir=initialdir,
+        title='Select file',
+        filetypes = (("TXT files","*.txt") , )
+    )
 
 # -------------------
 
