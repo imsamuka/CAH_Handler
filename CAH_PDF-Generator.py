@@ -215,7 +215,7 @@ def getData(List):
     return data
 
 
-def getBackTb(qtd):
+def createBackDT(qtd):
     text = "Cards Against Humanity"
     cps = ps.clone('') # Clone the ParagraphStyle
 
@@ -267,13 +267,13 @@ def fillExcessGap(excess, tables=ALL_tables):
 
 # ------- Get Back Cards Tables -------
 setBlackColor(False)
-appendDataTable(getBackTb(col*rows))
-appendDataTable(getBackTb(wcExcess))
+appendDataTable(createBackDT(col*rows))
+appendDataTable(createBackDT(wcExcess))
 fillExcessGap(wcExcess)
 
 setBlackColor(True)
-appendDataTable(getBackTb(col*rows))
-appendDataTable(getBackTb(bcExcess))
+appendDataTable(createBackDT(col*rows))
+appendDataTable(createBackDT(bcExcess))
 fillExcessGap(bcExcess)
 
 
